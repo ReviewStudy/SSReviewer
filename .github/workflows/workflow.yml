@@ -1,0 +1,33 @@
+name: Auto Categorize Markdown
+on:
+  push:
+    paths:
+      - "uploads/*.md"
+  workflow_dispatch:
+
+
+
+jobs:
+  categorize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Use Smart Composer
+        uses: FacerAin/smart-composer@v0.1.7
+        with:
+          openai_api_key: ${{ secrets.OPENAI_API_KEY }}
+          categories: "Python,Java,Network,Algorithm,Cloud,Database,Machine Learning,Design Pattern,Etc"
+          uploads_pattern: "uploads/*.md"
+          docs_dir: "docs"
+          rewrite: true
+          update-readme: true
+          
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Auto categorization" || echo "No changes to commit"
+          git push
