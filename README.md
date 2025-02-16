@@ -33,5 +33,6 @@
 ### Python
 
 - [python_interpreter.md](docs/Python/python_interpreter.md)
+- [python_interpreter_1.md](docs/Python/python_interpreter_1.md)
 
 <!-- END DOCS LIST -->
