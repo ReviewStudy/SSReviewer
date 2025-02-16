@@ -21,6 +21,10 @@
             - 지금 아이디어: GIthub Star List 자동 정리 및 인사이트 보여주기
 
 <!-- START DOCS LIST -->
+### Cloud
+
+- [tempo.md](docs/Cloud/tempo.md)
+
 ### Database
 
 - [database_index.md](docs/Database/database_index.md)
