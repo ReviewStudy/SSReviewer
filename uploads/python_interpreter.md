@@ -112,5 +112,6 @@ image: https://tech.ssut.me/content/images/2017/08/2.7-vs-3.6.png
 - 간단한 예시
 	- Numeric Calculation
 		- 24 * 60 -> 미리 계산해두고 저장해서 사용
+
  
   
