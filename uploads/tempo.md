@@ -3,15 +3,18 @@ Tempo - easy-to-use, and high-scale distributed tracing backend.
 
 Tempo는 오브젝트 스토리지 하나만으로 운영이 가능한 고확장성 분산 추적 백엔드
 
-![[Pasted image 20250216154552.png]]
+![image](https://github.com/user-attachments/assets/cd16daad-d090-4652-95af-7e82896317ec)
+
 
 ## Tracing Pipeline Components
 1. **클라이언트 계측 (Client Instrumentation)**
 2. **파이프라인 (Pipeline)**
 3. **백엔드 (Backend - Tempo)**
 4. **시각화 (Visualization)**
+   
 ### 1. Client Instrumentation
-![[Pasted image 20250216154651.png]]
+![image](https://github.com/user-attachments/assets/f645e584-2f1d-44d5-8fe8-e04ec0d22752)
+
 
 클라이언트 계측이란 애플리케이션 내부에 계측 포인트를 추가하여 스팬(span)을 생성하고 전송하는 과정
 - 예시) OpenTelemetry, Zipkin등 오픈소스 계측 프레임워크에서 SDK제공
@@ -29,7 +32,7 @@ https://github.com/open-telemetry/opentelemetry-java-instrumentation
 - 트리 형태로 구성된 원격 분석 데이터
 - 트레이스는 여러개의 스팬으로 이루어짐
 - 트레이스들은 루트 스팬이 있고 여기에서 부터 여러가지 자식 스팬들이 뻗어나온다. 
-![[Pasted image 20250216155409.png]]
+![image](https://github.com/user-attachments/assets/ecc68ee9-a783-490d-8983-dea5cd9819da)
 
 #### Span이란?
 - 시스템 내에서 서비스에 의해 수행되는 단일 작업 단위
@@ -51,7 +54,7 @@ https://github.com/open-telemetry/opentelemetry-java-instrumentation
 
 ### Traces and Telemetry
 - profile, metrics, trace, logs 이 4가지의 관계를 가지는 것은 매우 중요하다
-![[Pasted image 20250216155930.png]]
+![image](https://github.com/user-attachments/assets/5e4d482f-42fe-45af-9e66-1dd527f2c133)
 
 #### 메트릭 (Metrics) - "무언가가 발생하고 있다"
 - 시스템의 상태를 한눈에 파악할 수 있도록 제공되는 숫자 기반 데이터
@@ -74,7 +77,8 @@ https://github.com/open-telemetry/opentelemetry-java-instrumentation
 - 예를 들어, 특정 서비스가 다운되었을 때, upstream 서비스와 downstream 서비스에 미치는 영향을 분석 가능
 
 ### Tempo Configuration
-![[Pasted image 20250216160520.png]]
+![image](https://github.com/user-attachments/assets/34ce6868-e6eb-4771-ada4-849158c1b11c)
+
 
 ### Distributor
 - 여러 형식의 스팬을 수락하고, 트레이스 ID를 기반으로 해시링을 사용하여 Ingesters로 라우팅
