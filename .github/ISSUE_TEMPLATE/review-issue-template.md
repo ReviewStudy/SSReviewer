@@ -1,5 +1,5 @@
 ---
-name: Review issue template
+name: Review Issue Template
 about: Describe this issue template's purpose here.
 title: ''
 labels: ''
@@ -9,7 +9,7 @@ assignees: ''
 
 ---
 name: Review ISSUE TEMPLATE
-about: Review 기본 이슈 템플릿
+about: 리뷰 기본 이슈 템플릿
 title: ''
 labels: ''
 assignees: ''
