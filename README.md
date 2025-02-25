@@ -1,17 +1,17 @@
 <!-- START DOCS LIST -->
 ### Cloud
 
-- [tempo.md](docs/Cloud/tempo.md)
-- [terraformer.md](docs/Cloud/terraformer.md)
+- [High-Scale Distributed Tracing with Tempo](docs/Cloud/tempo.md)
+- [Terraformer: Importing Infrastructure as Code](docs/Cloud/terraformer.md)
 
 ### Database
 
-- [database_index.md](docs/Database/database_index.md)
+- [데이터베이스 인덱스와 디스크 I/O 최적화](docs/Database/database_index.md)
 
 ### Python
 
-- [python_GIL.md](docs/Python/python_GIL.md)
-- [python_interpreter.md](docs/Python/python_interpreter.md)
-- [python_interpreter_1.md](docs/Python/python_interpreter_1.md)
+- [Understanding Python's Global Interpreter Lock (GIL)](docs/Python/python_GIL.md)
+- [파이썬의 실행 방식과 인터프리터 종류](docs/Python/python_interpreter.md)
+- [파이썬의 실행 방식과 인터프리터 종류](docs/Python/python_interpreter_1.md)
 
 <!-- END DOCS LIST -->
