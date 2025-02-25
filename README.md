@@ -9,6 +9,10 @@
 
 - [데이터베이스 인덱스와 디스크 I/O 최적화](docs/Database/database_index.md)
 
+### Network
+
+- [HTTP 커넥션의 이해](docs/Network/persistent_connection.md)
+
 ### Python
 
 - [Understanding Python's Global Interpreter Lock (GIL)](docs/Python/python_GIL.md)
