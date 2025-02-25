@@ -104,3 +104,4 @@ kubectl delete node <노드이름>
 ![](https://i.imgur.com/ZuA7blA.png)
 
 
+

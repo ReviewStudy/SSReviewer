@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - "uploads/*.md"
+    branches:
+      - "main"
   workflow_dispatch:
 
 
