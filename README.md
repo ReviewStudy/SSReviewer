@@ -1,6 +1,7 @@
 <!-- START DOCS LIST -->
 ### Cloud
 
+- [K3S Raspberry Pi MultiNode Setup](docs/Cloud/multinode_k3s_rasp.md)
 - [High-Scale Distributed Tracing with Tempo](docs/Cloud/tempo.md)
 - [Terraformer: Importing Infrastructure as Code](docs/Cloud/terraformer.md)
 
