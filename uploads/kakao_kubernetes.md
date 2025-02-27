@@ -65,3 +65,106 @@ kubectl get events --sort-by=.metadata.creationTimestamp | grep Terminating
 
 현재는 pod이 성공적으로 삭제가 되었다는 그러한 어떤 이벤트도 발생하지 않는다 아무래도 그냥 삭제가 되는것 같다. 하지만 이제는 sigterm이 들어오면 gracefully 하게 shutdown 되어야한다. 
 
+Application-> GraceFul Shutdown
+
+```
+//if err := r.Run(); err != nil {
+	//	log.Fatalf("서버 실행 실패: %v", err)
+	//}
+
+quit := make(chan os.Signal, 1)
+// kill (no param) default send syscall.SIGTERM
+// kill -2 is syscall.SIGINT
+// kill -9 is syscall. SIGKILL but can"t be catch, so don't need add it
+signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+// <-quit → SIGTERM이 발생할 때까지 대기(Blocking).
+<-quit
+log.Println("Shutdown Server ...")
+
+//5초 동안 서버 종료를 기다릴 수 있는 컨텍스트 생성.
+ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+defer cancel()
+if err := srv.Shutdown(ctx); err != nil {
+	log.Fatal("Server Shutdown:", err)
+}
+// catching ctx.Done(). timeout of 5 seconds.
+select {
+case <-ctx.Done():
+	log.Println("timeout of 5 seconds.")
+}
+log.Println("Server exiting")
+```
+
+현재는 pod이 성공적으로 삭제가 되었다는 그러한 어떤 이벤트도 발생하지 않는다 아무래도 그냥 삭제가 되는것 같다. 하지만 이제는 sigterm이 들어오면 gracefully 하게 shutdown 되어야한다. 
+
+일반적인 잘 운영이 되는 상황에서 k6부하테스트를 진행하면
+
+![](https://i.imgur.com/Ay5qAta.png)
+
+다음과 같이 failed 0.00%가 나오는것을 확인할 수 있습니다 그런데 이제 
+
+```
+kubectl rollout restart deployment singsong-golang-deployment -n default
+```
+
+명령어가 실행되는 와중에 k6를 쏴보겠습니다 
+
+![](https://i.imgur.com/KLvuFx6.png)
+
+라고 합니다. 
+
+위에서 있었던 것처럼 graceful shutdown을 넣긴했는데 이것만으로는 부족했나 봅니다. 
+
+먼저 Readiness Probe를 추가해봅시다!
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: singsong-golang-deployment
+  labels:
+    app: singsong-golang
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: singsong-golang
+  template:
+    metadata:
+      labels:
+        app: singsong-golang
+    spec:
+      containers:
+      - name: singsong-golang-container
+        image: sunwupark/singsong-golang-private
+        ports:
+        - containerPort: 8080
+        envFrom:
+        - configMapRef:
+            name: singsong-config
+        readinessProbe:
+          httpGet:
+            path: /   # Go 애플리케이션이 제공하는 헬스 체크 엔드포인트
+            port: 8080
+          initialDelaySeconds: 5  # Pod 시작 후 첫 체크까지 대기 시간
+          periodSeconds: 2        # 2초마다 체크
+      imagePullSecrets:
+      - name: regcred
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+```
+
+그러고 나서 kubectl replace -f 로 새로운 버전을 배포했을떄
+
+![](https://i.imgur.com/2eC5lC3.png)
+
+바로 100%가 나오게 되었습니다
+
+event를보니 
+
+![](https://i.imgur.com/CPyNBCs.png)
+
+Unhealthy라고 하니 기존의 deployment pod을 내리지 않고 있다가 30초가 지나자 scaled down 하고 삭제하는 것을 볼 수 있다 
