@@ -37,3 +37,4 @@ WSGI는 **동기적(Synchronous)으로 요청을 처리**하기 때문에 다음
 [A Detailed Study of WSGI - Web Server Gateway Interface of Python](https://www.cabotsolutions.com/blog/a-detailed-study-of-wsgi-web-server-gateway-interface-of-python)
 
 
+
