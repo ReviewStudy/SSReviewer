@@ -18,7 +18,7 @@
 
 - [WSGI: Python 웹 서버와 프레임워크의 연결 고리](docs/Python/WSGI.md)
 - [Understanding Python's Global Interpreter Lock (GIL)](docs/Python/python_GIL.md)
+- [Python Dictionary의 Key 순서 보장](docs/Python/python_dictionary.md)
 - [파이썬의 실행 방식과 인터프리터 종류](docs/Python/python_interpreter.md)
-- [파이썬의 실행 방식과 인터프리터 종류](docs/Python/python_interpreter_1.md)
 
 <!-- END DOCS LIST -->
