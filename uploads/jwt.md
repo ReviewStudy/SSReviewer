@@ -38,6 +38,53 @@ JWT는 세 부분으로 구성됨.
 	- 짧은 만료 시간 설정
 	- [[Refresh Token]] 활용
 
+> 액세스 토큰이 만료되었을 때, 로그인을 다시 하지 않아도 새로운 액세스 토큰을 받을 수 있도록 해주는 역할
+
+**필요한 이유**
+- JWT는 만료 시간이 짧게 설정되는 경우가 많음
+- 이때 사용자가 계속해서 로그인을 반복하는 것은 힘듦
+- Refresh Token을 통해 자동으로 새로운 Access Token을 발급함
+
+**동작 방식**
+1. 사용자가 로그인하면 Access Token과 Refresh Token을 발급함
+2. 사용자는 Access Token을 통해 API 요청을 보냄
+3. Acess Token이 만료되면 Refresh Token을 서버에 보냄
+4. 서버가 Refresh Token을 검증하고, 새로운 Access Token을 발급함
+
+
+
+**장점**
+- 로그인 유지 가능
+- 보안 강화 (Access Token이 짧은 만료 시간을 가지게 할 수 있음)
+
+**단점**
+- Refresh Token이 털리면 답 없음
+- 추가적인 서버 로직 (Refresh Token 발급 및 검증)
+
+
+**생성 Tip**
+- 길고 안전한 난수 값으로
+- **서버에서 저장 & 검증 (DB or Redis)**
+	- **유출되거나 갱신이 필요할 때 파기 가능**
+	- **Stateless가 깨지긴 함**
+- HTTPS 사용
+- 기기별 Refresh Token 관리
+- 주기적으로 갱신
+
+
+**Rotate Refresh Token**
+**방법 21: Refresh Token을 저장**
+
+- Refresh Token을 **DB 또는 Redis에 저장하고, Access Token은 Stateless하게 유지**.
+- Refresh Token이 유출되면 **서버에서 무효화 가능**.
+- **완전한 Stateless는 아니지만, 보안성과 확장성을 확보**.
+
+**방법 2: Rotate Refresh Token**
+1. 클라이언트가 **Refresh Token을 서버에 보냄**.
+2. 서버는 **새로운 Refresh Token과 Access Token을 발급**.
+3. 기존 Refresh Token을 **즉시 폐기**.
+4. 클라이언트는 **새로운 Refresh Token을 사용**
+
 FastAPI에서는 어떻게 구현할 수 있을까?
 
 common/auth.py
